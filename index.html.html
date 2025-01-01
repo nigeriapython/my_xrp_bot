@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto Arbitrage Dashboard</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+<body>
+    <div class="container mt-4">
+        <h1 class="text-center">XRPUSDT Arbitrage Bot Dashboard</h1>
+        <div class="row mt-4">
+            <!-- Current Prices -->
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">Current Prices</div>
+                    <div class="card-body">
+                        <ul id="price-list" class="list-group">
+                            <li class="list-group-item">BTC/USDT: <span id="btc-price" class="text-success">Loading...</span></li>
+                            <li class="list-group-item">ETH/USDT: <span id="eth-price" class="text-success">Loading...</span></li>
+                            <li class="list-group-item">XRP/USDT: <span id="xrp-price" class="text-success">Loading...</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- Profit Opportunities -->
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">Profit Opportunities</div>
+                    <div class="card-body">
+                        <p>Best Trade: <strong id="best-trade">Fetching data...</strong></p>
+                    </div>
+                </div>
+            </div>
+            <!-- Actions -->
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">Actions</div>
+                    <div class="card-body text-center">
+                        <button id="refresh-prices" class="btn btn-primary">Refresh Prices</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Arbitrage Trades Table -->
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">Last 10 Arbitrage Opportunities</div>
+                    <div class="card-body">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Currency Pair</th>
+                                    <th>Buy Exchange</th>
+                                    <th>Sell Exchange</th>
+                                    <th>Profit</th>
+                                    <th>Timestamp</th>
+                                </tr>
+                            </thead>
+                            <tbody id="trades-table">
+                                <tr>
+                                    <td>1</td>
+                                    <td>XRP/USDT</td>
+                                    <td>CEX.IO</td>
+                                    <td>Bitmart</td>
+                                    <td>$200</td>
+                                    <td>2024-12-23 10:00:00</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    
+
+
+
+
+
+
+
+    <!-- Bootstrap Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Vanilla JavaScript -->
+    <script>
+        const API_URL = "https://api.binance.com/api/v3/ticker/price";
+
+        // Function to fetch and update prices
+        async function fetchPrices() {
+            try {
+                const response = await fetch(API_URL);
+                const data = await response.json();
+
+                // Extract prices for specific trading pairs
+                const btcPrice = data.find(pair => pair.symbol === "BTCUSDT")?.price;
+                const ethPrice = data.find(pair => pair.symbol === "ETHUSDT")?.price;
+                const xrpPrice = data.find(pair => pair.symbol === "XRPUSDT")?.price;
+
+                // // Update the DOM with fetched prices
+                // document.getElementById("btc-price").textContent = $${parseFloat(btcPrice).toFixed(2)};
+                // document.getElementById("eth-price").textContent = $${parseFloat(ethPrice).toFixed(2)};
+                // document.getElementById("xrp-price").textContent = $${parseFloat(xrpPrice).toFixed(4)};
+
+                // Update the best trade (placeholder logic)
+                const bestTrade = "BTC/USDT Arbitrage:" +$100; // Replace with actual logic
+                document.getElementById("best-trade").textContent = bestTrade;
+            } catch (error) {
+                console.error("Error fetching prices:", error);
+                alert("Failed to fetch prices. Please try again later.");
+            }
+        }
+
+        // Event listener for refresh button
+        document.getElementById("refresh-prices").addEventListener("click", () => {
+            fetchPrices();
+        });
+
+        // Fetch prices on page load
+        fetchPrices();
+    </script>
+</body>
+</html>
